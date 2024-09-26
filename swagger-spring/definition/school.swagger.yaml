@@ -1,0 +1,401 @@
+openapi: 3.0.3
+info:
+  title: Swagger School - OpenAPI 3.0
+  description: |-
+    This is a sample School server based on the OpenAPI 3.0 specification.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:{port}/api
+    variables:
+      port:
+        enum:
+          - '8080'
+          - '8081'
+        default: '8080'
+tags:
+  - name: Course
+    description: Everything about your Courses
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: Student
+    description: Access to Students
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
+paths:
+  /course/all:
+    get:
+      tags:
+        - Course
+      summary: Get all courses
+      description: Multiple status values can be provided with comma separated strings
+      operationId: all
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+        '400':
+          description: Invalid status value
+      security:
+        - course_auth:
+            - write:courses
+            - read:courses
+  /course/search/{id}:
+    get:
+      tags:
+        - Course
+      summary: Search course by Id
+      description: Returns a single course
+      operationId: getCourseById
+      parameters:
+        - name: id
+          in: path
+          description: ID of course to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Course not found
+      security:
+        - api_key: [ ]
+        - course_auth:
+            - write:pets
+            - read:pets
+  /course/search-student/{idCourse}:
+    get:
+      tags:
+        - Course
+      summary: Get all student in a Course
+      description: Returns all students in a course
+      operationId: getStudentByCourseId
+      parameters:
+        - name: idCourse
+          in: path
+          description: ID of course to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentByCourseResponse'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/StudentByCourseResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Course not found
+      security:
+        - api_key: [ ]
+        - course_auth:
+            - write:pets
+            - read:pets
+  /course/create:
+    post:
+      tags:
+        - Course
+      summary: Add a Course
+      description: Add a course
+      operationId: create
+      requestBody:
+        description: Create a new course
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Course'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      security:
+        - course_auth:
+            - write:courses
+            - read:courses
+  /student/all:
+    get:
+      tags:
+        - Student
+      summary: Get all students
+      description: Multiple status values can be provided with comma separated strings
+      operationId: allStudents
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid status value
+      security:
+        - course_auth:
+            - write:courses
+            - read:courses
+  /student/search/{id}:
+    get:
+      tags:
+        - Student
+      summary: Search student by Id
+      description: Returns a single student
+      operationId: getStudentById
+      parameters:
+        - name: id
+          in: path
+          description: ID of student to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Course not found
+      security:
+        - api_key: [ ]
+        - course_auth:
+            - write:pets
+            - read:pets
+  /student/search-by-course/{idCourse}:
+    get:
+      tags:
+        - Student
+      summary: Get all student in a Course
+      description: Returns all students in a course
+      operationId: getStudentByCourseIdStudent
+      parameters:
+        - name: idCourse
+          in: path
+          description: ID of course to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Course not found
+      security:
+        - api_key: [ ]
+        - course_auth:
+            - write:pets
+            - read:pets
+  /student/create:
+    post:
+      tags:
+        - Student
+      summary: Add a Student
+      description: Add a student
+      operationId: studentCreate
+      requestBody:
+        description: Create a new student
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+      security:
+        - course_auth:
+            - write:courses
+            - read:courses
+components:
+  schemas:
+    Course:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          description: Name of Course
+          example: Mathematics
+        teacher:
+          type: string
+          description: Name of Teacher
+          example: Joe Doe
+      xml:
+        name: course
+    Student:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 13
+        name:
+          type: string
+          description: First name of student
+          example: Jonh
+        lastName:
+          type: string
+          description: last name of student
+          example: Smith
+        email:
+          type: string
+          description: Email
+          example: chris.smith@local.com
+        courseId:
+          type: integer
+          format: int64
+          example: 3
+      xml:
+        name: student
+    studentDTOList:
+      type: object
+      properties:
+        name:
+          type: string
+          description: first name of student
+          example: Chris
+        lastName:
+          type: string
+          description: Last name of student
+          example: Smith
+        email:
+          type: string
+          description: Email
+          example: chris.smith@local.com
+      xml:
+        name: student
+    StudentByCourseResponse:
+      type: object
+      properties:
+        courseName:
+          type: string
+          description: Course name
+          example: Jonh Doe
+        teacher:
+          type: string
+          description: Name of Teacher
+          example: Joe Doe
+        studentDTOList:
+          type: array
+          items:
+            $ref: '#/components/schemas/studentDTOList'
+          description: List of student in the course
+      xml:
+        name: course
+  requestBodies:
+    Course:
+      description: Course object that needs to be added
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Course'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Course'
+  securitySchemes:
+    course_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

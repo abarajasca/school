@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SonarLintProjectSettings">
+    <option name="moduleMapping">
+      <map>
+        <entry key="school" value="notes" />
+        <entry key="school-config" value="notes-config" />
+        <entry key="school-course" value="notes-course" />
+        <entry key="school-eureka" value="notes-eureka" />
+        <entry key="school-gateway" value="notes-gateway" />
+        <entry key="school-student" value="notes-student" />
+      </map>
+    </option>
+  </component>
+</project>

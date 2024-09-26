@@ -1,0 +1,42 @@
+eureka:
+  client:
+    register-with-eureka: false
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: msvc-gateway
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: students
+          uri: lb://MSVC-STUDENT
+          predicates:
+            - Path=/api/student/**
+        - id: courses
+          uri: lb://MSVC-COURSE
+          predicates:
+            - Path=/api/course/**
+        - id: swagger
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/**
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - name: API Gateway
+        url: /v3/api-docs
+      - name: API Courses
+        url: /api/course/v3/api-docs
