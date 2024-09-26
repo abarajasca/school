@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS students;
+
+CREATE TABLE students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(250) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    course_id INT NOT NULL
+);
