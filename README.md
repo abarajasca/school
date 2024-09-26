@@ -2,6 +2,14 @@
 
 Goal of this project is to run a example of Microservices 
 
+Start up projects order:
+* school-config
+* school-eureka
+* school-course
+* school-student
+* school-gateway
+* front-end-a  ( ng serve )
+
 ### Reference Documentation
 For further reference, please consider the following sections:
 
@@ -20,6 +28,8 @@ The following guides illustrate how to use some features concretely:
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 * [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
 * [Service Registration and Discovery with Eureka and Spring Cloud](https://spring.io/guides/gs/service-registration-and-discovery/)
+* [H2 Database](https://www.baeldung.com/spring-boot-h2-database)
+* [Integrate OpenAPI with Sprint](https://www.baeldung.com/spring-cloud-gateway-integrate-openapi)
 
 
 
@@ -30,3 +40,6 @@ While most of the inheritance is fine, it also inherits unwanted elements like `
 To prevent this, the project POM contains empty overrides for these elements.
 If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
 
+TODO:
+* Front-ui enhancements.
+* Docker and docker compose.
