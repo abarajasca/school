@@ -1,22 +1,23 @@
-<h1>List of Courses</h1>
-
-
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Teacher</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr scope="row" *ngFor="let course of courses">
-      <th>{{ course.id }}</th>
-      <td>{{ course.name }} </td>
-      <td>{{ course.teacher }}</td>
-      <td><button class="btn btn-danger" type="button">Delete</button></td>
-    </tr>
-  </tbody>
-</table>
+<p-panel header="List of Courses" [toggleable]="true">
+  <p-table [value]="courses" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Teacher</th>          
+            <th>Action</th>          
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-course>
+        <tr>
+            <td>{{ course.id }}</td>
+            <td>{{ course.name }}</td>
+            <td>{{ course.teacher }}</td>
+            <td><p-button label="Delete" class="p-button-danger"></p-button></td>    
+        </tr>
+    </ng-template>
+  </p-table>
+  
 
 <button class="btn btn-primary" type="button">Add new Course</button>
+</p-panel>

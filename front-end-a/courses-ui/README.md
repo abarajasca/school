@@ -25,3 +25,16 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+# Docker Manually
+## Build
+`docker build -t school-angular-app .`
+
+## Run
+`docker run -d -it -p 80:80/tcp --name angular-app school-angular-app:latest`
+
+# Docker compose.
+only `docker compose up -d` is required.
+
+## Open web application
+http://localhost:80
